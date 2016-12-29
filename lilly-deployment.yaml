@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lilly-api
+  namespace: ly-ci
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lilly-api
+    spec:
+      containers:
+      - name: lilly-image
+        image: registry.walkure.net:5000/lilly:latest
+        env:
+        - name: TEST_ENV
+          value: "hello"
+        ports:
+        - containerPort: 5000

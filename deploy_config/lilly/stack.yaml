@@ -1,0 +1,22 @@
+---
+common:
+    registry_url: registry.walkure.net:5000
+applications:
+    - lilly-api
+app_spec:
+    - name: lilly-api
+      image_name: lilly
+      metadata:
+            app: lilly-api
+            layer: api
+            lang: python
+      replicas: 2
+      ports: [5000]
+      resources:
+          requests:
+              cpu: 100m
+              memory: 512Mi
+      properties:
+          env_name: default
+          MESSAGE: Hello World!
+

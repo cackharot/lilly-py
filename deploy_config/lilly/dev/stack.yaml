@@ -1,0 +1,4 @@
+app_spec:
+    - name: lilly-api
+      properties:
+        MESSAGE: Hello from dev environment!

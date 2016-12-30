@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: lilly-api
-  namespace: ly-ci
+  namespace: ly-$APP_ENV_NAME
 spec:
   replicas: 1
   template:
@@ -14,7 +14,7 @@ spec:
       - name: lilly-image
         image: registry.walkure.net:5000/lilly:latest
         env:
-        - name: TEST_ENV
-          value: "hello"
+        - name: MESSAGE
+          value: $MESSAGE
         ports:
         - containerPort: 5000

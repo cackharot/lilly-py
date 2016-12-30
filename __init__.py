@@ -1,10 +1,12 @@
 from flask import Flask, request
+import os
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello World!"
+    message = os.environ.get('MESSAGE', 'Hello World!')
+    return message
 
 
 if __name__ == '__main__':

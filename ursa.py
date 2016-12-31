@@ -111,4 +111,5 @@ if __name__ == '__main__':
 
     rem_args = sys.argv[2:]
     ret = action_kv[action](rem_args)
-    sys.exit(int(ret))
+    # sys.exit(int(ret))
+    sys.exit(0)

@@ -1,8 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{stack}}-{{env}}-{{name}}
+  name: {{stack}}-{{name}}
   namespace: {{stack}}-{{env}}
+  labels:
+    name: {{stack}}-{{name}}
 spec:
   replicas: {{replicas}}
   template:
@@ -15,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{stack}}-{{name}}
-        image: {{registry_url}}/{{image_name}}:{{sys_env['GO_DEPENDENCY_LABEL_BUILD']}}
+        image: "{{registry_url}}/{{image_name}}:{{sys_env['GO_DEPENDENCY_LABEL_BUILD']}}"
         env:
         {% for k,v in properties.items() -%}
         - name: {{k}}

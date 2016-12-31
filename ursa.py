@@ -7,8 +7,10 @@ from inspect import getmembers, isfunction, getmodule
 from jinja2 import Environment
 import yaml
 from helper import data_merge
+import pykube
 
 j2_env = Environment(trim_blocks=True)
+kapi = pykube.HTTPClient(pykube.KubeConfig.from_file("~/.kube/config"))
 
 def deploy(args):
     if len(args) != 2:
@@ -65,31 +67,57 @@ def merge_env_content(stack,env,default):
     return d
 
 def gen_namespace(stack,env):
+    nsname = "%s-%s" % (stack,env)
     data = { 'stack': stack, 'env': env }
     tpl = open(os.path.join('./kube_templates',"namespace.yaml.tpl")).read()
     fc = j2_env.from_string(tpl).render(**data)
     dest_file = os.path.join('./output',stack,env,"%s-ns.yaml" % (stack))
     os.makedirs(os.path.dirname(dest_file), exist_ok=True)
     open(dest_file, 'w').write(fc)
+    ns = [x for x in pykube.Namespace.objects(kapi).filter(selector={'name':nsname})]
+    if len(ns) == 0:
+        print("Creating namespace '%s'" % nsname)
+        pykube.Namespace(kapi,yaml.load(fc)).create()
+    else:
+        print("Namespace '%s' exists already. Skipping!" % nsname)
     return True
 
 
 def gen_service(stack,env,app_name,data):
+    ns = "%s-%s" % (stack,env)
+    name = "%s-%s-svc" % (stack,app_name)
     tpl = open(os.path.join('./kube_templates',"service.yaml.tpl")).read()
     fc = j2_env.from_string(tpl).render(**data)
     # print(fc)
     dest_file = os.path.join('./output',stack,env,"%s-svc.yaml" % (app_name))
     os.makedirs(os.path.dirname(dest_file), exist_ok=True)
     open(dest_file, 'w').write(fc)
+    svc = [x for x in pykube.Service.objects(kapi).filter(namespace=ns,selector={'name':name})]
+    app_svc = pykube.Service(kapi,yaml.load(fc))
+    if len(svc) == 0:
+        print("Creating service '%s'" % name)
+        app_svc.create()
+    else:
+        print("Service '%s' exists already. Skipping!" % name)
     return True
 
 def gen_deployment(stack,env,app_name,data):
+    ns = "%s-%s" % (stack,env)
+    name = "%s-%s" % (stack,app_name)
     tpl = open(os.path.join('./kube_templates',"deployment.yaml.tpl")).read()
     fc = j2_env.from_string(tpl).render(**data)
     # print(fc)
     dest_file = os.path.join('./output',stack,env,"%s-deployment.yaml" % (app_name))
     os.makedirs(os.path.dirname(dest_file), exist_ok=True)
     open(dest_file, 'w').write(fc)
+    dep = [x for x in pykube.Deployment.objects(kapi).filter(namespace=ns,selector={'name':name})]
+    app_deploy = pykube.Deployment(kapi,yaml.load(fc))
+    if len(dep) == 0:
+        print("Creating deployment '%s'" % name)
+        app_deploy.create()
+    else:
+        print("Updating deployment '%s'" % (name))
+        app_deploy.update()
     return True
 
 current_module = sys.modules[__name__]

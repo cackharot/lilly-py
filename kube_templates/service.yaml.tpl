@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{stack}}-{{env}}-{{name}}-svc
+  name: {{stack}}-{{name}}-svc
   namespace: {{stack}}-{{env}}
   labels:
-    app: {{stack}}-{{env}}-{{name}}
+    name: {{stack}}-{{name}}-svc
 spec:
   selector:
     app: {{stack}}-{{name}}

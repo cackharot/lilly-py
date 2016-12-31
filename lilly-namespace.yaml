@@ -1,6 +1,0 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-    name: ly-ci
-    labels:
-        name: ly-ci

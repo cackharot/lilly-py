@@ -7,7 +7,6 @@ app_spec:
     - name: lilly-api
       image_name: lilly
       metadata:
-            app: lilly-api
             layer: api
             lang: python
       replicas: 2

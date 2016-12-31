@@ -8,6 +8,7 @@ spec:
   template:
     metadata:
       labels:
+        app: {{stack}}-{{name}}
     {% for k,v in metadata.items() %}
     {{k}}: {{v}}
     {% endfor -%}

@@ -7,7 +7,7 @@ metadata:
     app: {{stack}}-{{env}}-{{name}}
 spec:
   selector:
-    app: {{stack}}-{{env}}-{{name}}
+    app: {{stack}}-{{name}}
   type: LoadBalancer
   ports:
   - name: http

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{stack}}-{{name}}
+  name: {{stack}}-{{env}}-{{name}}
   namespace: {{stack}}-{{env}}
 spec:
   replicas: {{replicas}}

@@ -21,6 +21,6 @@ app_spec:
           MONGO_HOST: localhost
           MONGO_PORT: 27017
           MONGO_DBNAME: lilly
-          MONGO_USERNAME:
-          MONGO_PASSWORD:
+          MONGO_USERNAME: ''
+          MONGO_PASSWORD: ''
 

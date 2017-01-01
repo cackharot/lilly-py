@@ -21,7 +21,7 @@ spec:
         env:
         {% for k,v in properties.items() -%}
         - name: {{k}}
-          value: {{v}}
+          value: '{{v}}'
         {% endfor -%}
         ports:
         {% for p in ports -%}

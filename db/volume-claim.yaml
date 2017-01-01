@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: database-storage-pvc
+  namespace: lilly-ops
+  labels:
+      name: database-storage-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  selector:
+      matchLabels:
+          stack: lilly
+  resources:
+    requests:
+      storage: 1Gi

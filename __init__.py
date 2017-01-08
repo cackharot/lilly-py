@@ -29,6 +29,10 @@ def home():
     message.append('</table>')
     return ''.join(message)
 
+@app.route('/healthz')
+def healthz():
+    return 'ok', 200
+
 @app.route('/create',methods=['POST'])
 def create():
     user = request.get_json()

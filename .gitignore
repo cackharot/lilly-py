@@ -92,3 +92,5 @@ output/**
 outputs/**
 output/
 outputs/
+tags
+.DS_Store

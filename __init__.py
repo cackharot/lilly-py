@@ -15,13 +15,19 @@ app.config['MONGO_PORT'] = os.environ.get('MONGO_PORT','27107')
 app.config['MONGO_DBNAME'] = os.environ.get('MONGO_DBNAME',app.name)
 app.config['MONGO_USERNAME'] = os.environ.get('MONGO_USERNAME')
 app.config['MONGO_PASSWORD'] = os.environ.get('MONGO_PASSWORD')
+app.config['MONGO_CONNECT'] = False
 
 mongo = PyMongo(app)
 
 @app.route('/')
 def home():
-    message = os.environ.get('MESSAGE', 'Hello World!')
-    return message
+    message = [os.environ.get('MESSAGE', 'Hello World!')]
+    message.append("<h2>ENVIRONMENT VARIABLES</h2>")
+    message.append('<table>')
+    for k,v in os.environ.items():
+        message.append("<tr><td>%s</td><td>%s</td></tr>" % (k,v))
+    message.append('</table>')
+    return ''.join(message)
 
 @app.route('/create',methods=['POST'])
 def create():

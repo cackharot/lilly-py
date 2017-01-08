@@ -1,7 +1,0 @@
-app_spec:
-    - name: lilly-api
-      properties:
-        MESSAGE: Hello from dev environment!
-        MONGO_HOST: lilly-mongo-svc.lilly-ops
-        MONGO_DBNAME: lilly-dev
-

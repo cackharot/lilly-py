@@ -22,6 +22,7 @@ mongo = PyMongo(app)
 @app.route('/')
 def home():
     message = [os.environ.get('MESSAGE', 'Hello World!')]
+    message.append("HLKSHKDFhlf")
     message.append("<h2>ENVIRONMENT VARIABLES</h2>")
     message.append('<table>')
     for k,v in os.environ.items():
